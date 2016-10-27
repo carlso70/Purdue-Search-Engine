@@ -68,8 +68,10 @@ public class Search extends HttpServlet {
 			String query;
 			List<String> urls = new ArrayList<String>();
 			List<String> descriptions = new ArrayList<String>();
+			List<String> images = new ArrayList<String>();
 			
 			if (param.matches("\\d+$")) {
+				//TODO
 				// if param is a urlid
 				query = "select * from urls where urlid='" + param + "' ";
 			} else if (param.contains(".com") || param.contains("http") || param.contains("//")) {
@@ -94,11 +96,16 @@ public class Search extends HttpServlet {
 					urlids.add(urlSet.getInt("urlid"));
 				}
 				
+				urls = CrawlerHelpers.getOrderedUrls(urlids);
+				images = CrawlerHelpers.getOrderedImages(urlids);
+				descriptions = CrawlerHelpers.getOrderedDescriptions(urlids);
+				
 				// Remove duplicate urlids
 				Set<Integer> dup = new HashSet<>();
 				dup.addAll(urlids);
 				urlids.clear();
 				urlids.addAll(dup);
+				
 				
 				// create big query to get all urls with urlids
 				query = "select * from urls where urlid in (";
@@ -116,26 +123,20 @@ public class Search extends HttpServlet {
 				while (urlSet.next()) {
 					urls.add(urlSet.getString("url"));
 					descriptions.add(urlSet.getString("description"));
+					images.add(urlSet.getString("image"));
 				}
+				
 			
-				System.out.println(urls);
-				System.out.println(descriptions);
 				
 			}
-
-			/*
-			 * Statement statement; System.out.println("query " + query);
-			 * statement = (Statement) connection.createStatement(); ResultSet
-			 * rs = statement.executeQuery(query);
-			 * 
-			 * String rUrl = ""; String imgurl = ""; if (rs.next()) {
-			 * System.out.println("IMAGE = " + rs.getString("image")); rUrl =
-			 * rs.getString("url"); imgurl = rs.getString("image"); }
-			 */
 
 			//request.setAttribute("url", rUrl);
 			//request.setAttribute("image", imgurl);
 
+			request.setAttribute("urls", urls);
+			request.setAttribute("descriptions", descriptions);
+			request.setAttribute("images", images);
+			
 			RequestDispatcher view = request.getRequestDispatcher("/index.jsp");
 			view.forward(request, response);
 			connection.close();

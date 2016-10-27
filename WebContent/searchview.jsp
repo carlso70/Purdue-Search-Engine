@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	
-<%@ page import = "java.util.*" %>
+
+<%@ page import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,7 +12,8 @@
 	<p>Testing 123</p>
 	<table width="700px" align="center" style="border: 1px solid #000000;">
 		<tr>
-			<td colspan=4 align="center" style="background-color: teal"><b>User Record</b></td>
+			<td colspan=4 align="center" style="background-color: teal"><b>User
+					Record</b></td>
 		</tr>
 		<tr style="background-color: lightgrey;">
 			<td><b>User Name</b></td>

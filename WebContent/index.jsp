@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	
+<%@page import = "java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,19 +31,28 @@
 	</form>
 	
 		<%
-			String url = "";
-			String imgurl = "";
-			if (request.getAttribute("url") != null) {
-				url = (String) request.getAttribute("url");
-			}
-			if (request.getAttribute("image") != null) {
-				imgurl = (String) request.getAttribute("image");
-			}
+			
+
+				ArrayList urls = new ArrayList<String>();
+				ArrayList images = new ArrayList<String>();
+				if (request.getAttribute("urls") != null) {
+					urls = (ArrayList) request.getAttribute("urls");
+				}
+				if (request.getAttribute("images") != null) {
+					images = (ArrayList) request.getAttribute("images");
+				}
 			
 		%>
 		
-		<p><%=url %></p>
-		<img src=<%=imgurl %> width="200" height="200">
-	
+		<% if (urls.size() > 0 && images.size() > 0) { %>
+		
+		<p><%=urls.get(0) %></p>
+		<img src=<%=images.get(0) %> height = 200 width = 200>
+		
+		<%} %>
+		
+		
+		
+		
 </body>
 </html>
