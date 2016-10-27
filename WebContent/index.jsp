@@ -30,12 +30,18 @@
 	
 		<%
 			String url = "";
+			String imgurl = "";
 			if (request.getAttribute("url") != null) {
 				url = (String) request.getAttribute("url");
 			}
+			if (request.getAttribute("image") != null) {
+				imgurl = (String) request.getAttribute("image");
+			}
+			
 		%>
 		
 		<p><%=url %></p>
+		<img src=<%=imgurl %> width="200" height="200">
 	
 </body>
 </html>

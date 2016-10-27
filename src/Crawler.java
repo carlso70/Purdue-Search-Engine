@@ -159,7 +159,7 @@ public class Crawler {
 		if (img != null) {
 			String src = img.absUrl("src");
 			// try to add the img that isn't the purdont logo
-			if (src.contains("www.cs.purdue.edu/images/logo")) {
+			if (src.contains("logo") || src.contains("brand")) {
 				if (images.size() < 3) {
 					img = images.get(1);
 					if (img != null) {
