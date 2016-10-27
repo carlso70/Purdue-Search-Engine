@@ -36,7 +36,7 @@ public class WordTableThread extends Thread {
 			this.conneciton = DriverManager.getConnection(url, username, password);
 			in.close();
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 	}
 
