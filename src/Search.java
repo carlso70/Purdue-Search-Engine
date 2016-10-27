@@ -1,5 +1,6 @@
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
 /**
@@ -49,46 +49,35 @@ public class Search extends HttpServlet {
 
 		response.setContentType("text/html");
 
-		Connection connection = null;
 		String url = "jdbc:mysql://localhost:3306/";
 		String dbName = "purdue";
 		String driver = "com.mysql.jdbc.Driver";
 		String userName = "root";
 		String password = "Yaw9cram";
 
-		Statement st;
 		try {
 			Class.forName(driver).newInstance();
-			connection = DriverManager.getConnection(url + dbName, userName, password);
+			Connection connection = DriverManager.getConnection(url + dbName, userName, password);
 			System.out.println("Connected!");
+			
+			
 			String pid = request.getParameter("pid");
 
 			ArrayList al = null;
 			ArrayList pid_list = new ArrayList();
-			String query = "select * from urls where url='" + pid + "' ";
+			String query = "select * from urls where urlid='" + pid + "' ";
 
+			Statement statement;
 			System.out.println("query " + query);
-			st = connection.createStatement();
-			ResultSet rs = st.executeQuery(query);
-
-			while (rs.next()) {
-				al = new ArrayList();
-
-				// out.println(rs.getString(1));
-				// out.println(rs.getString(2));
-				// out.println(rs.getString(3));
-				// out.println(rs.getString(4));
-				al.add(rs.getString(1));
-				al.add(rs.getString(2));
-				al.add(rs.getString(3));
-				al.add(rs.getString(4));
-
-				System.out.println("al :: " + al);
-				pid_list.add(al);
+			statement = (Statement) connection.createStatement();
+			ResultSet rs = statement.executeQuery(query);
+			
+			String rUrl = "";
+			if (rs.next()) {
+				rUrl = rs.getString("url");
 			}
-
-			request.setAttribute("piList", pid_list);
-			RequestDispatcher view = request.getRequestDispatcher("/searchview.jsp");
+			request.setAttribute("url", rUrl);
+			RequestDispatcher view = request.getRequestDispatcher("/index.jsp");
 			view.forward(request, response);
 			connection.close();
 			System.out.println("Disconnected!");

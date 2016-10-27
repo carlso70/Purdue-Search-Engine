@@ -187,17 +187,26 @@ public class Crawler {
 		Statement stat = connection.createStatement();
 		String[] words = b.split(" ");
 		// Build a massive query of all the words
-		
+
+		String query = "INSERT INTO words(word, urlid) value ";
+
 		for (int i = 0; i < words.length; i++) {
-			if (words[i].length() > 1) {
+			if (words[i].length() > 1 && i < words.length - 1) {
 				String word = words[i].toLowerCase();
-				String query = "INSERT INTO words(word, urlid) value ('" + word + "'," + "'" + Integer.toString(nextUrlID) + "');";
-				System.out.println(query);
-				stat.executeUpdate(query);
+				query += "('" + word + "'," + "'" + Integer.toString(nextUrlID) + "'), ";
+			} else if (i == words.length - 1) {
+				String word = words[i].toLowerCase();
+				query += "('" + word + "'," + "'" + Integer.toString(nextUrlID) + "');";
 			}
 		}
-		
+
+		System.out.println(query);
+		stat.executeUpdate(query);
 	}
+	/*
+	 * public void addWordTable(Elements body) { WordTableThread thread = new
+	 * WordTableThread(body, nextUrlID); thread.run(); thread.interrupt(); }
+	 */
 
 	public void addDescription(Elements titles, Elements ps, Elements bodys) {
 		Element t = titles.first();
@@ -216,7 +225,7 @@ public class Crawler {
 		String add = title + " " + description;
 
 		try {
-			insertURLDescription(add.substring(0, 200), nextUrlID - 1);
+			insertURLDescription(add.substring(0, 199), nextUrlID - 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -236,10 +245,11 @@ public class Crawler {
 			// Adds all the suburls, words and images on the page
 			if (this.maxurls > nextUrlIDScanned) {
 				addUrls(doc.select("a[href]"));
-				addImages(doc.select("img"));
-				addDescription(doc.select("title"), doc.select("p"), doc.select("body"));
-				addWordTable(doc.select("body"));
 			}
+
+			addImages(doc.select("img"));
+			addDescription(doc.select("title"), doc.select("p"), doc.select("body"));
+			addWordTable(doc.select("body"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
