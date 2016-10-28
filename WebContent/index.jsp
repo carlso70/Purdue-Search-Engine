@@ -35,6 +35,7 @@
 
 				ArrayList urls = new ArrayList<String>();
 				ArrayList images = new ArrayList<String>();
+				ArrayList descriptions = new ArrayList<String>();
 				if (request.getAttribute("urls") != null) {
 					urls = (ArrayList) request.getAttribute("urls");
 				}
@@ -45,10 +46,11 @@
 		%>
 		
 		<% if (urls.size() > 0 && images.size() > 0) { %>
+		<%for (int i = 0; i < urls.size(); i++) {%>
+		<p><%=urls.get(i) %></p>
+		<img src=<%=images.get(i) %> height = 200 width = 200>
 		
-		<p><%=urls.get(0) %></p>
-		<img src=<%=images.get(0) %> height = 200 width = 200>
-		
+		<%} %>
 		<%} %>
 		
 		

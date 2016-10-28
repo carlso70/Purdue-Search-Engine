@@ -90,7 +90,6 @@ public class Search extends HttpServlet {
 				Statement wordStat = (Statement) connection.createStatement();
 				ResultSet urlSet = wordStat.executeQuery(query);
 				
-				//TODO find way to count which urlids pop up the most
 				List<Integer> urlids = new ArrayList<Integer>();
 				while (urlSet.next()) {
 					urlids.add(urlSet.getInt("urlid"));
@@ -100,38 +99,8 @@ public class Search extends HttpServlet {
 				images = CrawlerHelpers.getOrderedImages(urlids);
 				descriptions = CrawlerHelpers.getOrderedDescriptions(urlids);
 				
-				// Remove duplicate urlids
-				Set<Integer> dup = new HashSet<>();
-				dup.addAll(urlids);
-				urlids.clear();
-				urlids.addAll(dup);
-				
-				
-				// create big query to get all urls with urlids
-				query = "select * from urls where urlid in (";
-				for (int i = 0; i < urlids.size(); i++) {
-					if (i != urlids.size() - 1) {
-						query += "'" + urlids.get(i) + "', ";
-					}else {
-						query += "'" + urlids.get(i) + "');";
-					}
-				}
-				
-				Statement stat = (Statement)connection.createStatement();
-				urlSet = stat.executeQuery(query);
-				
-				while (urlSet.next()) {
-					urls.add(urlSet.getString("url"));
-					descriptions.add(urlSet.getString("description"));
-					images.add(urlSet.getString("image"));
-				}
-				
-			
-				
 			}
 
-			//request.setAttribute("url", rUrl);
-			//request.setAttribute("image", imgurl);
 
 			request.setAttribute("urls", urls);
 			request.setAttribute("descriptions", descriptions);
