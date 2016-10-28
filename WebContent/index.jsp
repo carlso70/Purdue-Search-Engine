@@ -42,14 +42,19 @@
 				if (request.getAttribute("images") != null) {
 					images = (ArrayList) request.getAttribute("images");
 				}
+				if (request.getAttribute("descriptions") != null) {
+					descriptions = (ArrayList)request.getAttribute("descriptions");
+				}
 			
 		%>
 		
 		<% if (urls.size() > 0 && images.size() > 0) { %>
 		<%for (int i = 0; i < urls.size(); i++) {%>
 		<p><%=urls.get(i) %></p>
+		<p><%=descriptions.get(i) %>
+		<a href=<%=urls.get(i) %>>
 		<img src=<%=images.get(i) %> height = 200 width = 200>
-		
+		</a>
 		<%} %>
 		<%} %>
 		

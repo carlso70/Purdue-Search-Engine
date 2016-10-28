@@ -109,7 +109,8 @@ public class Crawler {
 
 	public void insertURLDescription(String des, int urlid) throws SQLException, IOException {
 		Statement stat = connection.createStatement();
-		String query = "UPDATE URLS SET description = '" + des + "' WHERE urlid = '" + urlid + "';";
+		String query = "UPDATE URLS SET description = \"" + des + "\" WHERE urlid = " + urlid + ";";
+		System.out.println(query);
 		stat.executeUpdate(query);
 	}
 
@@ -159,16 +160,18 @@ public class Crawler {
 		if (img != null) {
 			String src = img.absUrl("src");
 			// try to add the img that isn't the purdont logo
-			if (src.contains("logo") || src.contains("brand")) {
-				if (images.size() < 3) {
-					img = images.get(1);
+			if (src.contains("logo") || src.contains("brand") && images.size() > 1) {
+				if (images.size() > 2) {
+					img = images.get(2);
 					if (img != null) {
 						src = img.absUrl("src");
 					}
 				} else {
-					img = images.get(2);
-					if (img != null) {
+					if (img != null && images.size() > 1) {
+						img = images.get(1);
 						src = img.absUrl("src");
+					}else {
+						src = images.get(0).absUrl("src");
 					}
 				}
 			}
@@ -212,7 +215,10 @@ public class Crawler {
 		Element t = titles.first();
 		String title = t.text().toString();
 		Element p = ps.first();
-		String description = p.text().toString();
+		String description = null;
+		if (p != null) {
+			description = p.text().toString();
+		}
 		Element body = bodys.first();
 		String btext = body.text().toString();
 		if (description == null || (description.length() < 50 && btext != null)) {
@@ -223,9 +229,13 @@ public class Crawler {
 		// Must use substring to prevent descriptions going over length
 
 		String add = title + " " + description;
-
-		try {
-			insertURLDescription(add.substring(0, 199), nextUrlID - 1);
+		try{
+			int len = add.length();
+			if (len > 199){
+				insertURLDescription(add.substring(0, 199), nextUrlID);
+			}else {
+				insertURLDescription(add, nextUrlID);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
