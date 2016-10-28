@@ -6,20 +6,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="styles.css">
 <title>Purdue Search</title>
 </head>
 <body>
 	<br />
 	<br />
 	<form method="post" name="frm" action="Search">
-		<table border="0" width="300" align="center" bgcolor="#e9f">
+		<table align="center">
 			<tr>
-				<td colspan=2 style="font-size: 12pt;" align="center">
-					<h3>Search User</h3>
-				</td>
-			</tr>
-			<tr>
-				<td><b>User Name</b></td>
+				<td><b>Search</b></td>
 				<td>: <input type="text" name="pid" id="pid">
 				</td>
 			</tr>
@@ -50,11 +46,13 @@
 		
 		<% if (urls.size() > 0 && images.size() > 0) { %>
 		<%for (int i = 0; i < urls.size(); i++) {%>
+		<div class="result">
 		<p><%=urls.get(i) %></p>
-		<p><%=descriptions.get(i) %>
 		<a href=<%=urls.get(i) %>>
-		<img src=<%=images.get(i) %> height = 200 width = 200>
+		<img src=<%=images.get(i) %> height = 150 width = 150>
 		</a>
+		<p><%=descriptions.get(i) %></p>
+		</div>
 		<%} %>
 		<%} %>
 		
