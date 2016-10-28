@@ -71,9 +71,15 @@ public class Search extends HttpServlet {
 			List<String> images = new ArrayList<String>();
 			
 			if (param.matches("\\d+$")) {
-				//TODO
 				// if param is a urlid
 				query = "select * from urls where urlid='" + param + "' ";
+				Statement idStat = (Statement) connection.createStatement();
+				ResultSet set = idStat.executeQuery(query);
+				while (set.next()){
+					urls.add(set.getString("url"));
+					images.add(set.getString("image"));
+					descriptions.add(set.getString("description"));
+				}
 			} else if (param.contains(".com") || param.contains("http") || param.contains("//")) {
 				
 			} else {
