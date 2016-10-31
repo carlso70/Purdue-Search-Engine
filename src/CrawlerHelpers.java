@@ -36,8 +36,6 @@ public class CrawlerHelpers {
 		});
 		importantIds = result;
 
-		System.out.println("results = " + importantIds);
-		System.out.println(importantIds.get(0).getKey());
 
 		Connection connection;
 		try {

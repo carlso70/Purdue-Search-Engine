@@ -175,7 +175,7 @@ public class Crawler {
 					}
 				}
 			}
-
+			
 			try {
 				insertImageInDB(src, nextUrlID);
 			} catch (Exception e) {

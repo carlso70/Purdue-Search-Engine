@@ -44,10 +44,10 @@
 			
 		%>
 		
-		<% if (urls.size() > 0 && images.size() > 0) { %>
+		<% if (urls.size() > 0 && images.size() > 0 && descriptions.size() > 0) { %>
 		<%for (int i = 0; i < urls.size(); i++) {%>
 		<div class="result">
-		<p><%=urls.get(i) %></p>
+		<%=urls.get(i) %>
 		<a href=<%=urls.get(i) %>>
 		<img src=<%=images.get(i) %> height = 150 width = 150>
 		</a>
