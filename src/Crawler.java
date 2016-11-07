@@ -91,7 +91,7 @@ public class Crawler {
 
 			System.out.println("This.current = " + this.current);
 		} catch (Exception e) {
-			e.printStackTrace();
+	//		//e.printStackTrace();
 		}
 	}
 
@@ -136,7 +136,7 @@ public class Crawler {
 			String query = "DELETE FROM URLS WHERE urlid='" + urlid + "'";
 			stat.executeQuery(query);
 		} catch (Exception e) {
-			e.printStackTrace();
+			////e.printStackTrace();
 		}
 	}
 
@@ -150,7 +150,7 @@ public class Crawler {
 					nextUrlIDScanned++;
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}
@@ -179,7 +179,7 @@ public class Crawler {
 			try {
 				insertImageInDB(src, nextUrlID);
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}
@@ -237,7 +237,7 @@ public class Crawler {
 				insertURLDescription(add, nextUrlID);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
@@ -262,7 +262,7 @@ public class Crawler {
 			addWordTable(doc.select("body"));
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
@@ -281,7 +281,7 @@ public class Crawler {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 }

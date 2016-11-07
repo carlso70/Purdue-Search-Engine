@@ -1,4 +1,5 @@
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -51,20 +53,27 @@ public class Search extends HttpServlet {
 		doGet(request, response);
 
 		response.setContentType("text/html");
-
+		
+		Properties props = new Properties();
+		FileInputStream in = new FileInputStream("database.properties");
+		props.load(in);
+		
 		String url = "jdbc:mysql://localhost:3306/";
 		String dbName = "purdue";
 		String driver = "com.mysql.jdbc.Driver";
-		String userName = "root";
-		String password = "Yaw9cram";
-
+		String userName = "root"
+		String password = "Yaw9Cram"
+		System.out.println(password + userName);
+		
+		in.close();
+		
 		try {
 			Class.forName(driver).newInstance();
 			Connection connection = DriverManager.getConnection(url + dbName, userName, password);
 			System.out.println("Connected!");
 
 			String param = request.getParameter("pid");
-
+						
 			String query;
 			List<String> urls = new ArrayList<String>();
 			List<String> descriptions = new ArrayList<String>();
@@ -80,8 +89,6 @@ public class Search extends HttpServlet {
 					images.add(set.getString("image"));
 					descriptions.add(set.getString("description"));
 				}
-			} else if (param.contains(".com") || param.contains("http") || param.contains("//")) {
-				
 			} else {
 				String[] words = param.split(" ");
 				query = "select * from words where word in (";
@@ -117,7 +124,7 @@ public class Search extends HttpServlet {
 			connection.close();
 			System.out.println("Disconnected!");
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		}
 	}
 

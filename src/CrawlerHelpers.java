@@ -68,7 +68,7 @@ public class CrawlerHelpers {
 			return urls;
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		return null;
@@ -131,7 +131,7 @@ public class CrawlerHelpers {
 			return urls;
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		return null;
@@ -162,9 +162,6 @@ public class CrawlerHelpers {
 			}
 		});
 		importantIds = result;
-
-		System.out.println("results = " + importantIds);
-		System.out.println(importantIds.get(0).getKey());
 
 		Connection connection;
 		try {
@@ -197,7 +194,7 @@ public class CrawlerHelpers {
 			return urls;
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		return null;
