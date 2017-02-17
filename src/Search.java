@@ -62,7 +62,7 @@ public class Search extends HttpServlet {
 		String dbName = "purdue";
 		String driver = "com.mysql.jdbc.Driver";
 		String userName = "root"
-		String password = "Yaw9Cram"
+		String password = "pass"
 		System.out.println(password + userName);
 		
 		in.close();
